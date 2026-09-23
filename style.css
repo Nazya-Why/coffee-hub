@@ -682,6 +682,112 @@ ul, li {
 }
 
 /* ==========================================================================
+   Галерея
+   ========================================================================== */
+
+.gallery {
+  padding: 120px 0;
+  background-color: var(--color-white);
+}
+
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.gallery__item {
+  aspect-ratio: 1 / 1;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.gallery__item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Легке збільшення фото при наведенні, саме зображення "вилазить" за рамки
+   не більше, ніж дозволяє overflow:hidden контейнера з класу .photo */
+.gallery__item img {
+  transition: transform 0.6s var(--ease-out-soft);
+}
+
+.gallery__item:hover img {
+  transform: scale(1.08);
+}
+
+/* ==========================================================================
+   Відгуки
+   ========================================================================== */
+
+.reviews {
+  padding: 120px 0;
+  background-color: var(--color-cream);
+}
+
+.reviews__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.review {
+  background-color: var(--color-white);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.review:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.review__stars {
+  display: flex;
+  gap: 4px;
+  color: var(--color-brown);
+  margin-bottom: 16px;
+}
+
+.review__stars svg {
+  width: 16px;
+  height: 16px;
+}
+
+.review__text {
+  font-size: 15px;
+  color: var(--color-text-dark);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.review__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--color-green);
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.review__name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ==========================================================================
    Футер / Контакти
    ========================================================================== */
 
@@ -1322,6 +1428,14 @@ ul, li {
     grid-template-columns: repeat(3, 1fr);
   }
 
+  .gallery__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .reviews__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .footer__inner {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1408,7 +1522,9 @@ ul, li {
 
   .menu,
   .offer,
-  .about {
+  .about,
+  .gallery,
+  .reviews {
     padding: 80px 0;
   }
 }
