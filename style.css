@@ -1,0 +1,1414 @@
+/* ==========================================================================
+   COFFEE HUB — стилі сайту
+   Усі кольори винесені в змінні (:root), щоб їх було легко змінювати
+   ========================================================================== */
+
+:root {
+  /* Основні кольори бренду */
+  --color-white: #FFFFFF;
+  --color-cream: #F7F5F2;
+  --color-green: #1E5C45;
+  --color-green-dark: #163f30;   /* темніший зелений для hover-стану */
+  --color-brown: #6F4E37;
+
+  /* Кольори тексту */
+  --color-text-dark: #1D1D1F;
+  --color-text-gray: #6E6E73;
+
+  /* Форма та відступи */
+  --radius: 20px;
+  --radius-small: 12px;
+  --container-width: 1200px;
+
+  /* Тоновані тіні теплим коричневим замість чорного — так тіні виглядають
+     органічно на кремовому/білому фоні, а не як типова "сіра" UI-тінь */
+  --shadow-sm: 0 8px 20px rgba(63, 44, 30, 0.09);
+  --shadow-md: 0 20px 40px rgba(63, 44, 30, 0.13);
+  --shadow-lg: 0 30px 70px rgba(30, 20, 14, 0.28);
+
+  /* Швидкість анімацій (в межах 0.3–0.6с, як просив клієнт) */
+  /* Криві плавності у стилі Apple: м'який розгін і плавне гальмування */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.3s var(--ease-smooth);
+  --transition-normal: 0.5s var(--ease-out-soft);
+}
+
+/* ==========================================================================
+   Загальний скид стилів та базові налаштування
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* плавна прокрутка при переході по якорях */
+}
+
+/* Атрибут hidden має завжди ховати елемент, навіть якщо в нього є свій display
+   (наприклад, .order-form: display:flex переб'є стандартну поведінку hidden) */
+[hidden] {
+  display: none !important;
+}
+
+body {
+  /* Системний шрифт Apple (SF Pro): на macOS/iOS підхоплюється нативний SF,
+     на інших системах — Inter як максимально близький замінник */
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display',
+    'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--color-text-dark);
+  background-color: var(--color-white);
+  line-height: 1.6;
+  overflow-x: hidden; /* прибираємо горизонтальну прокрутку */
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, li {
+  list-style: none;
+}
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Повага до налаштування "менше анімацій" в системі користувача */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Фотографії напоїв і випічки
+   ========================================================================== */
+
+.photo {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background-color: var(--color-cream); /* видно, поки фото ще завантажується */
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* фото завжди заповнює контейнер, не спотворюючись */
+  display: block;
+}
+
+.photo--hero {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 480px;
+  margin-left: auto;
+}
+
+.photo--card {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  margin-bottom: 20px;
+}
+
+.photo--offer {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+/* ==========================================================================
+   Кнопки
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 32px;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+}
+
+.btn--primary {
+  background-color: var(--color-green);
+  color: var(--color-white);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-green-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(30, 92, 69, 0.25);
+}
+
+.btn--secondary {
+  background-color: var(--color-white);
+  color: var(--color-text-dark);
+  border: 1px solid #E0DCD5;
+}
+
+.btn--secondary:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Легке "натискання" при кліку — тактильне відчуття, як у інтерфейсах Apple */
+.btn:active {
+  transform: scale(0.96);
+  transition-duration: 0.15s;
+}
+
+/* Неактивна кнопка (наприклад, підтвердження при порожньому кошику) */
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn--small {
+  padding: 10px 22px;
+  font-size: 14px;
+}
+
+/* Помітний фокус для клавіатурної навігації (доступність) */
+.btn:focus-visible,
+.navbar__link:focus-visible,
+.menu__tab:focus-visible,
+.card__order-btn:focus-visible,
+.modal__close:focus-visible,
+.cart-item__qty-btn:focus-visible,
+.cart-item__remove:focus-visible,
+.footer__social:focus-visible {
+  outline: 2px solid var(--color-green);
+  outline-offset: 3px;
+}
+
+.navbar .btn:focus-visible {
+  outline-color: var(--color-white);
+}
+
+/* ==========================================================================
+   Навігація
+   ========================================================================== */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  /* 95% непрозорості — ефект матового скла збережено, але колір більше не
+     "змішується" з білим фоном під ним і завжди виглядає як той самий --color-green */
+  background: rgba(30, 92, 69, 0.95);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 76px;
+}
+
+.navbar__logo {
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--color-white);
+}
+
+.navbar__nav {
+  display: flex;
+  gap: 36px;
+}
+
+.navbar__link {
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--color-white);
+  opacity: 0.85;
+  transition: opacity var(--transition-fast);
+}
+
+.navbar__link:hover {
+  opacity: 1;
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* На зеленому фоні навігації кнопка "Замовити" інвертована — світла на темному */
+.navbar .btn--primary {
+  background-color: var(--color-white);
+  color: var(--color-green);
+}
+
+.navbar .btn--primary:hover {
+  background-color: var(--color-cream);
+  color: var(--color-green-dark);
+}
+
+/* Лічильник товарів у кошику на кнопці "Замовити" */
+.cart-trigger {
+  position: relative;
+  gap: 4px;
+}
+
+.cart-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 100px;
+  background-color: var(--color-green);
+  color: var(--color-white);
+  font-size: 11px;
+  font-weight: 700;
+  transition: transform 0.25s var(--ease-out-soft);
+}
+
+/* Коротка "пульсація" бейджа, коли додається товар */
+.cart-badge.is-bumped {
+  transform: scale(1.35);
+}
+
+/* Кнопка-гамбургер прихована на десктопі */
+.navbar__burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.navbar__burger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-white);
+  border-radius: 2px;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+/* Анімація гамбургера в хрестик, коли меню відкрите */
+.navbar__burger.is-active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.navbar__burger.is-active span:nth-child(2) {
+  opacity: 0;
+}
+.navbar__burger.is-active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Мобільне меню (список посилань, що випадає) */
+/* Анімація через grid-template-rows: плавніша за max-height,
+   бо не потребує "вигаданого" максимального значення висоти */
+.navbar__mobile {
+  display: grid;
+  grid-template-rows: 0fr;
+  background-color: var(--color-green);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  opacity: 0;
+  transition: grid-template-rows var(--transition-normal), opacity var(--transition-normal);
+}
+
+.navbar__mobile.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.navbar__mobile-inner {
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 24px;
+}
+
+.navbar__mobile.is-open .navbar__mobile-inner {
+  padding: 16px 24px 24px;
+}
+
+.navbar__mobile-link {
+  padding: 12px 0;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--color-white);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.navbar__mobile .btn {
+  margin-top: 12px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   Головний екран (Hero)
+   ========================================================================== */
+
+.hero {
+  padding: 160px 0 100px;
+  background-color: var(--color-white);
+}
+
+.hero__inner {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.hero__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero__title {
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  margin-bottom: 24px;
+}
+
+.hero__subtitle {
+  font-size: 19px;
+  color: var(--color-text-gray);
+  max-width: 440px;
+  margin-bottom: 40px;
+}
+
+.hero__buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero__image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   Заголовки секцій (перевикористовуваний блок)
+   ========================================================================== */
+
+.section-heading {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto 56px;
+}
+
+.section-heading__eyebrow {
+  display: inline-block;
+  color: var(--color-brown);
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.section-heading__title {
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+  color: var(--color-brown);
+}
+
+.section-heading__text {
+  color: var(--color-text-gray);
+  font-size: 17px;
+}
+
+/* ==========================================================================
+   Меню
+   ========================================================================== */
+
+.menu {
+  padding: 120px 0;
+  background-color: var(--color-cream);
+}
+
+/* Вкладки категорій */
+.menu__tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 48px;
+}
+
+.menu__tab {
+  padding: 12px 26px;
+  border-radius: 100px;
+  border: 1px solid #E0DCD5;
+  background-color: var(--color-white);
+  color: var(--color-text-dark);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.menu__tab:hover {
+  border-color: var(--color-green);
+}
+
+.menu__tab.is-active {
+  background-color: var(--color-green);
+  border-color: var(--color-green);
+  color: var(--color-white);
+}
+
+/* Сітка карток: 1 колонка на мобільному (за замовчуванням) */
+.menu__grid {
+  display: none; /* панель схована, поки не активна */
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.menu__grid.is-active {
+  display: grid;
+  animation: fadeIn var(--transition-normal); /* плавна поява при перемиканні вкладки */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  background-color: var(--color-white);
+  border-radius: var(--radius);
+  padding: 20px;
+  cursor: pointer; /* вся картка клікабельна — відкриває детальний перегляд */
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--color-green);
+  outline-offset: 3px;
+}
+
+.card__title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.card__text {
+  color: var(--color-text-gray);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+/* Нижній рядок картки: ціна + кнопка замовлення */
+.card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card__price {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--color-green);
+  font-size: 17px;
+}
+
+.card__order-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-green);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+.card__order-btn:hover {
+  background-color: var(--color-green-dark);
+  transform: scale(1.12);
+}
+
+.card__order-btn:active {
+  transform: scale(0.9);
+  transition-duration: 0.15s;
+}
+
+.card__order-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-fast);
+}
+
+/* Коротке підтвердження додавання в кошик: іконка "стрибає" і фон темнішає */
+.card__order-btn.is-added {
+  background-color: var(--color-green-dark);
+}
+
+.card__order-btn.is-added svg {
+  transform: scale(1.3) rotate(90deg);
+}
+
+/* ==========================================================================
+   Сезонна пропозиція
+   ========================================================================== */
+
+.offer {
+  padding: 120px 0;
+  background-color: var(--color-white);
+}
+
+.offer__inner {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.offer__image,
+.offer__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.offer__title {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--color-brown);
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.offer__description {
+  color: var(--color-text-gray);
+  font-size: 17px;
+  margin-bottom: 32px;
+  max-width: 460px;
+}
+
+/* ==========================================================================
+   Про нас та переваги
+   ========================================================================== */
+
+.about {
+  padding: 120px 0;
+  background-color: var(--color-cream);
+}
+
+.benefits {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.benefit {
+  background-color: var(--color-white);
+  border-radius: var(--radius);
+  padding: 36px 28px;
+  text-align: center;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.benefit:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.benefit__icon {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 16px;
+  color: var(--color-brown);
+}
+
+.benefit__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.benefit__title {
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--color-brown);
+}
+
+.benefit__text {
+  color: var(--color-text-gray);
+  font-size: 15px;
+}
+
+/* ==========================================================================
+   Футер / Контакти
+   ========================================================================== */
+
+.footer {
+  background-color: var(--color-brown);
+  color: var(--color-white);
+  padding: 80px 0 0;
+}
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  padding-bottom: 60px;
+}
+
+.footer .navbar__logo {
+  color: var(--color-white);
+}
+
+.footer__tagline {
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 8px;
+  font-size: 15px;
+}
+
+.footer__heading {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.footer__info p {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.footer__socials {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.footer__social {
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  transition: opacity var(--transition-fast);
+}
+
+.footer__social:hover {
+  opacity: 0.7;
+}
+
+.footer__bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ==========================================================================
+   Модальне вікно оформлення замовлення
+   ========================================================================== */
+
+/* Спільна база для будь-якого повноекранного шару сайту (кошик і картка товару) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+
+  /* Приховане вікно не заважає клікам і не читається скрінрідером */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-normal), visibility 0s linear var(--transition-normal);
+}
+
+.modal-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--transition-normal);
+}
+
+/* Кошик — класична модалка по центру екрана з затемненим фоном */
+.modal-overlay--dialog {
+  background: rgba(29, 29, 31, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.modal {
+  background-color: var(--color-white);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 40px 32px 32px;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+
+  /* Легке масштабування + зсув при відкритті — плавно й "по-apple" */
+  transform: scale(0.92) translateY(16px);
+  opacity: 0;
+  transition: transform var(--transition-normal), opacity var(--transition-normal);
+}
+
+.modal-overlay.is-open .modal {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--color-cream);
+  color: var(--color-text-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.modal__close:hover {
+  background-color: #EFE9E1;
+  transform: rotate(90deg);
+}
+
+.modal__close svg {
+  width: 14px;
+  height: 14px;
+}
+
+.modal__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  padding-right: 24px;
+}
+
+.modal__title svg {
+  width: 22px;
+  height: 22px;
+  color: var(--color-green);
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Кошик усередині модального вікна
+   ========================================================================== */
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #EFECE6;
+}
+
+.cart-item__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cart-item__name {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.cart-item__price {
+  color: var(--color-green);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* Степер кількості — єдина "пігулка" замість двох окремих кружечків,
+   так він читається як один цільний контрол, а не набір випадкових кнопок */
+.cart-item__qty {
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  height: 30px;
+  border-radius: 100px;
+  background-color: var(--color-cream);
+  overflow: hidden;
+}
+
+.cart-item__qty-btn {
+  width: 28px;
+  border: none;
+  background: none;
+  color: var(--color-text-dark);
+  font-size: 15px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.cart-item__qty-btn:hover {
+  background-color: var(--color-green);
+  color: var(--color-white);
+}
+
+.cart-item__qty-btn:active {
+  transform: scale(0.9);
+}
+
+.cart-item__qty-value {
+  min-width: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  background-color: var(--color-white);
+}
+
+.cart-item__remove {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: none;
+  color: var(--color-text-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 50%;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.cart-item__remove:hover {
+  background-color: var(--color-cream);
+  color: var(--color-text-dark);
+}
+
+.cart-item__remove svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* Порожній кошик — не глухий кут, а запрошення повернутись до меню:
+   іконка, тепла фраза і пряме посилання назад до карток */
+.cart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  padding: 28px 12px 32px;
+}
+
+.cart-empty__icon {
+  width: 40px;
+  height: 40px;
+  color: var(--color-brown);
+  opacity: 0.5;
+}
+
+.cart-empty__text {
+  color: var(--color-text-gray);
+  font-size: 14px;
+  max-width: 260px;
+}
+
+.cart-empty__link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 700;
+  color: var(--color-green);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  transition: opacity var(--transition-fast);
+}
+
+.cart-empty__link:hover {
+  opacity: 0.7;
+}
+
+.cart-empty__link:focus-visible {
+  outline: 2px solid var(--color-green);
+  outline-offset: 4px;
+}
+
+/* Підсумок замовлення — виділений кремовий блок, а не рядок, що губиться між формою */
+.cart-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px 0 20px;
+  padding: 14px 16px;
+  border-radius: var(--radius-small);
+  background-color: var(--color-cream);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.cart-total span:last-child {
+  color: var(--color-green);
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 4px;
+  border-top: 1px solid #EFECE6;
+}
+
+.order-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.order-form__field input,
+.order-form__field textarea {
+  font-family: inherit;
+  font-size: 15px;
+  padding: 12px 16px;
+  border-radius: var(--radius-small);
+  border: 1px solid #E0DCD5;
+  background-color: var(--color-cream);
+  resize: none;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.order-form__field input:focus,
+.order-form__field textarea:focus {
+  outline: none;
+  border-color: var(--color-green);
+  background-color: var(--color-white);
+}
+
+.order-form__submit {
+  margin-top: 8px;
+  width: 100%;
+}
+
+/* Неактивний стан кнопки виглядає навмисно (нейтральний кремовий),
+   а не як притлумлена зелена кнопка — і текст на ній сам пояснює, чому вона неактивна */
+.order-form__submit:disabled {
+  background-color: var(--color-cream);
+  color: var(--color-text-gray);
+  opacity: 1;
+}
+
+.modal__success {
+  text-align: center;
+  padding-top: 8px;
+}
+
+.modal__success-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  color: var(--color-green);
+}
+
+.modal__success h3 {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.modal__success p {
+  color: var(--color-text-gray);
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+
+/* ==========================================================================
+   Картка товару — повноекранна сторінка (велике фото, вага/калорії, склад)
+   ========================================================================== */
+
+/* Товар відкривається як окрема повноекранна сторінка поверх сайту.
+   z-index нижчий за .navbar (1000) — навігація лишається видимою й активною,
+   тож сторінка не виглядає порожньою "порожнечею в космосі" */
+.modal-overlay--fullscreen {
+  z-index: 500;
+  background-color: var(--color-white);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: translateY(24px);
+  transition: opacity var(--transition-normal), visibility 0s linear var(--transition-normal), transform var(--transition-normal);
+}
+
+.modal-overlay--fullscreen.is-open {
+  transform: translateY(0);
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+/* Посилання "Назад до меню" замість самотньої кнопки-хрестика —
+   одразу дає зрозуміти, де ти і як повернутись */
+.product-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-green);
+  cursor: pointer;
+  padding: 8px 0;
+  margin-bottom: 32px;
+  transition: opacity var(--transition-fast);
+}
+
+.product-back:hover {
+  opacity: 0.7;
+}
+
+.product-back:focus-visible {
+  outline: 2px solid var(--color-green);
+  outline-offset: 3px;
+}
+
+.product-back svg {
+  width: 16px;
+  height: 16px;
+}
+
+.product-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  /* Відступ зверху враховує висоту закріпленої навігації (76px) + запас */
+  padding: 100px 24px 100px;
+}
+
+.product-page__top {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-bottom: 56px;
+}
+
+.product-photo {
+  aspect-ratio: 1 / 1;
+}
+
+.product-page__info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Бейдж категорії над назвою — та сама роль, що й "Гострий" у McDonald's,
+   але оформлений у власній кремово-коричневій палітрі бренду */
+.product-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background-color: var(--color-cream);
+  color: var(--color-brown);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.product-title {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+.product-meta {
+  color: var(--color-text-gray);
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.product-description {
+  color: var(--color-text-gray);
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+/* Ціна — велика й помітна, як має бути перед кнопкою "Додати в кошик" */
+.product-price {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--color-green);
+  margin-bottom: 24px;
+}
+
+.product-add-btn {
+  align-self: flex-start;
+  min-width: 220px;
+}
+
+.product-nutrition-section {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.product-nutrition-heading {
+  font-size: 36px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 32px;
+  color: var(--color-text-dark);
+}
+
+.product-accordion {
+  border-top: 1px solid #EFECE6;
+}
+
+.product-accordion__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 26px 0;
+  border: none;
+  border-bottom: 1px solid #EFECE6;
+  background: none;
+  font-family: inherit;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  text-align: left;
+  cursor: pointer;
+}
+
+.product-accordion__chevron {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: var(--color-text-gray);
+  transition: transform var(--transition-fast);
+}
+
+.product-accordion__header.is-open .product-accordion__chevron {
+  transform: rotate(180deg);
+}
+
+/* Плавне розгортання через grid-template-rows — той самий прийом,
+   що й для мобільного меню: не потрібно вгадувати висоту вмісту */
+.product-accordion__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-normal);
+  border-bottom: 1px solid #EFECE6;
+}
+
+.product-accordion__panel.is-open {
+  grid-template-rows: 1fr;
+}
+
+.product-accordion__inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.product-accordion__inner p {
+  padding: 16px 0;
+  font-size: 16px;
+  color: var(--color-text-gray);
+  line-height: 1.6;
+}
+
+.product-accordion__inner p:first-child {
+  padding-top: 4px;
+}
+
+/* ==========================================================================
+   Анімація появи секцій при прокрутці (керується JS через Intersection Observer)
+   ========================================================================== */
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+.fade-in-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Адаптивність: планшет (від 768px)
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  .menu__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .benefits {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer__inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Адаптивність: десктоп (від 1024px)
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+  .menu__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer__inner {
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+  }
+
+  /* Сторінка товару: фото зліва, інформація справа — як у великих кавових мереж */
+  .product-page__top {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 72px;
+  }
+}
+
+/* ==========================================================================
+   Адаптивність: великий десктоп (від 1280px) — 4 колонки в меню
+   ========================================================================== */
+
+@media (min-width: 1280px) {
+  .menu__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Адаптивність: мобільні пристрої (до 900px) — ховаємо десктопну навігацію
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .navbar__nav,
+  .navbar__actions .btn--primary {
+    display: none;
+  }
+
+  .navbar__burger {
+    display: flex;
+  }
+
+  .hero__inner,
+  .offer__inner {
+    flex-direction: column;
+  }
+
+  .hero__image {
+    order: -1; /* фото над текстом на мобільному */
+    width: 100%;
+  }
+
+  .photo--hero {
+    max-width: 100%;
+  }
+
+  .hero__title {
+    font-size: 40px;
+  }
+
+  .hero__subtitle {
+    max-width: 100%;
+  }
+
+  .section-heading__title {
+    font-size: 30px;
+  }
+
+  .offer__title {
+    font-size: 28px;
+  }
+
+  .hero {
+    padding: 140px 0 60px;
+  }
+
+  .menu,
+  .offer,
+  .about {
+    padding: 80px 0;
+  }
+}

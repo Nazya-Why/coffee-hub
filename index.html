@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee Hub — твоя кав'ярня</title>
+
+  <!-- Шрифт Inter з Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===================== НАВІГАЦІЯ ===================== -->
+  <header class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="#top" class="navbar__logo">Coffee Hub</a>
+
+      <!-- Пункти меню для десктопу -->
+      <nav class="navbar__nav" id="navbarNav">
+        <a href="#menu" class="navbar__link">Меню</a>
+        <a href="#offer" class="navbar__link">Пропозиції</a>
+        <a href="#about" class="navbar__link">Про нас</a>
+        <a href="#contacts" class="navbar__link">Контакти</a>
+      </nav>
+
+      <div class="navbar__actions">
+        <button type="button" class="btn btn--primary btn--small cart-trigger">
+          Замовити
+          <span class="cart-badge" data-cart-badge hidden>0</span>
+        </button>
+
+        <!-- Кнопка-гамбургер для мобільного меню -->
+        <button class="navbar__burger" id="burgerBtn" aria-label="Відкрити меню" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Мобільне випадаюче меню -->
+    <div class="navbar__mobile" id="mobileMenu">
+      <div class="navbar__mobile-inner">
+        <a href="#menu" class="navbar__mobile-link">Меню</a>
+        <a href="#offer" class="navbar__mobile-link">Пропозиції</a>
+        <a href="#about" class="navbar__mobile-link">Про нас</a>
+        <a href="#contacts" class="navbar__mobile-link">Контакти</a>
+        <button type="button" class="btn btn--primary cart-trigger">
+          Замовити
+          <span class="cart-badge" data-cart-badge hidden>0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== ГОЛОВНИЙ ЕКРАН ===================== -->
+  <section class="hero" id="top">
+    <div class="container hero__inner">
+      <div class="hero__text fade-in-up">
+        <h1 class="hero__title">Твоя кава.<br>Твій ранок.</h1>
+        <p class="hero__subtitle">Свіжообсмажені зерна, тепла атмосфера і смак, який хочеться повторити щодня.</p>
+        <div class="hero__buttons">
+          <a href="#menu" class="btn btn--primary">Дивитися меню</a>
+          <a href="#contacts" class="btn btn--secondary">Знайти кав'ярню</a>
+        </div>
+      </div>
+
+      <div class="hero__image fade-in-up">
+        <div class="photo photo--hero">
+          <img src="images/hero-cappuccino.jpg" alt="Капучино з малюнком на піні у сонячному світлі">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== МЕНЮ ===================== -->
+  <section class="menu" id="menu">
+    <div class="container">
+      <div class="section-heading fade-in-up">
+        <span class="section-heading__eyebrow">Меню</span>
+        <h2 class="section-heading__title">Обери свій смак</h2>
+        <p class="section-heading__text">Від класичного еспресо до затишного гарячого шоколаду — тут є все, чого просить настрій.</p>
+      </div>
+
+      <!-- Вкладки категорій меню -->
+      <div class="menu__tabs fade-in-up" role="tablist">
+        <button class="menu__tab is-active" data-tab="coffee" role="tab">Кава</button>
+        <button class="menu__tab" data-tab="tea" role="tab">Чай</button>
+        <button class="menu__tab" data-tab="cold" role="tab">Холодні напої</button>
+        <button class="menu__tab" data-tab="bakery" role="tab">Випічка</button>
+      </div>
+
+      <!-- Категорія: Кава -->
+      <div class="menu__grid is-active" data-panel="coffee">
+        <article class="card fade-in-up" tabindex="0" role="button">
+          <div class="photo photo--card">
+            <img src="images/espresso.jpg" alt="Еспресо у маленькій білій чашці на блюдці">
+          </div>
+          <h3 class="card__title">Еспресо</h3>
+          <p class="card__text">Насичений і бадьорий постріл кави для швидкого початку дня.</p>
+          <div class="card__footer">
+            <span class="card__price">55 ₴</span>
+            <button type="button" class="card__order-btn" data-add-to-cart="Еспресо" data-price="55" aria-label="Додати Еспресо у кошик">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </article>
+        <article class="card fade-in-up" tabindex="0" role="button">
+          <div class="photo photo--card">
+            <img src="images/cappuccino.jpg" alt="Капучино з ніжною молочною пінкою у білому кухлі">
+          </div>
+          <h3 class="card__title">Капучино</h3>
+          <p class="card__text">Оксамитова піна і м'який баланс кави та молока.</p>
+          <div class="card__footer">
+            <span class="card__price">75 ₴</span>
+            <button type="button" class="card__order-btn" data-add-to-cart="Капучино" data-price="75" aria-label="Додати Капучино у кошик">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </article>
+        <article class="card fade-in-up" tabindex="0" role="button">
+          <div class="photo photo--card">
+            <img src="images/latte.jpg" alt="Латте у високій скляній чашці з візерунком на піні">
+          </div>
+          <h3 class="card__title">Латте</h3>
+          <p class="card__text">М'який, кремовий, з легкою кавовою ноткою на другому плані.</p>
+          <div class="card__footer">
+            <span class="card__price">80 ₴</span>
+            <button type="button" class="card__order-btn" data-add-to-cart="Латте" data-price="80" aria-label="Додати Латте у кошик">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </article>
+        <article class="card fade-in-up" tabindex="0" role="button">
+          <div class="photo photo--card">
+            <img src="images/americano.jpg" alt="Американо у прозорій скляній чашці на світлому фоні">
+          </div>
+          <h3 class="card__title">Американо</h3>
+          <p class="card__text">Чиста кава без зайвого — для тих, хто цінує простоту.</p>
+          <div class="card__footer">
+            <span class="card__price">60 ₴</span>
+            <button type="button" class="card__order-btn" data-add-to-cart="Американо" data-price="60" aria-label="Додати Американо у кошик">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <!-- Категорія: Чай -->
+      <div class="menu__grid" data-panel="tea">
+        <article class="card fade-in-up" tabindex="0" role="button">
+          <div class="photo photo--card">
+            <img src="images/black-tea.jpg" alt="Чорний чай у скляному чайнику з листям м'яти поруч">
+          </div>
+          <h3 class="card__title">Чорний чай</h3>
+          <p class="card__text">Класика з насиченим ароматом і легкою терпкістю.</p>
+          <div class="card__footer">
+            <span class="card__price">50 ₴</span>
+            <button type="button" class="card__order-btn" data-add-to-cart="Чорний чай" data-price="50" aria-label="Додати Чорний чай у кошик">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </article>
+        <article class="card fade-in-up" tabindex="0" role="button">
+          <div class="photo photo--card">
+            <img src="images/green-tea.jpg" alt="Зелений чай з листочками м'яти у прозорому кухлі">
+          </div>
+          <h3 class="card__title">Зелений чай</h3>
+          <p class="card__text">Легкий і освіжаючий, з тонким трав'яним смаком.</p>
+          <div class="card__footer">
+            <span class="card__price">50 ₴</span>
+            <button type="button" class="card__order-btn" data-add-to-cart="Зелений чай" data-price="50" aria-label="Додати Зелений чай у кошик">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </article>
+        <article class="card fade-in-up" tabindex="0" role="button">
+          <div class="photo photo--card">
+            <img src="images/berry-tea.jpg" alt="Ягідний чай зі свіжими ягодами">
+          </div>
+          <h3 class="card__title">Ягідний чай</h3>
+          <p class="card__text">Соковита суміш ягід і фруктів — тепло у чашці.</p>
+          <div class="card__footer">
+            <span class="card__price">55 ₴</span>
+            <button type="button" class="card__order-btn" data-add-to-cart="Ягідний чай" data-price="55" aria-label="Додати Ягідний чай у кошик">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <!-- Категорія: Холодні напої -->
+      <div class="menu__grid" data-panel="cold">
+        <article class="card fade-in-up" tabindex="0" role="button">
+          <div class="photo photo--card">
+            <img src="images/iced-latte.jpg" alt="Айс-латте з льодом у високому скляному стакані">
+          </div>
+          <h3 class="card__title">Айс-латте</h3>
+          <p class="card__text">Прохолодна кавова насолода в спекотний день.</p>
+          <div class="card__footer">
+            <span class="card__price">85 ₴</span>
+            <button type="button" class="card__order-btn" data-add-to-cart="Айс-латте" data-price="85" aria-label="Додати Айс-латте у кошик">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </article>
+        <article class="card fade-in-up" tabindex="0" role="button">
+          <div class="photo photo--card">
+            <img src="images/frappe.jpg" alt="Холодний фраппе зі збитою піною у прозорому стакані">
+          </div>
+          <h3 class="card__title">Фраппе</h3>
+          <p class="card__text">Збита кавова піна поверх крижаної основи.</p>
+          <div class="card__footer">
+            <span class="card__price">90 ₴</span>
+            <button type="button" class="card__order-btn" data-add-to-cart="Фраппе" data-price="90" aria-label="Додати Фраппе у кошик">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </article>
+        <article class="card fade-in-up" tabindex="0" role="button">
+          <div class="photo photo--card">
+            <img src="images/iced-tea.jpg" alt="Холодний чай з лимоном і кубиками льоду">
+          </div>
+          <h3 class="card__title">Холодний чай</h3>
+          <p class="card__text">Освіжаючий напій з ноткою цитрусу.</p>
+          <div class="card__footer">
+            <span class="card__price">60 ₴</span>
+            <button type="button" class="card__order-btn" data-add-to-cart="Холодний чай" data-price="60" aria-label="Додати Холодний чай у кошик">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <!-- Категорія: Випічка -->
+      <div class="menu__grid" data-panel="bakery">
+        <article class="card fade-in-up" tabindex="0" role="button">
+          <div class="photo photo--card">
+            <img src="images/croissant.jpg" alt="Свіжий круасан на дерев'яній дошці">
+          </div>
+          <h3 class="card__title">Круасан</h3>
+          <p class="card__text">Хрусткий зовні, ніжний всередині. Ідеальна пара до кави.</p>
+          <div class="card__footer">
+            <span class="card__price">45 ₴</span>
+            <button type="button" class="card__order-btn" data-add-to-cart="Круасан" data-price="45" aria-label="Додати Круасан у кошик">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </article>
+        <article class="card fade-in-up" tabindex="0" role="button">
+          <div class="photo photo--card">
+            <img src="images/cheesecake.jpg" alt="Шматок чізкейку з ягодами на білій тарілці">
+          </div>
+          <h3 class="card__title">Чізкейк</h3>
+          <p class="card__text">Ніжний вершковий смак з легкою кислинкою ягід.</p>
+          <div class="card__footer">
+            <span class="card__price">70 ₴</span>
+            <button type="button" class="card__order-btn" data-add-to-cart="Чізкейк" data-price="70" aria-label="Додати Чізкейк у кошик">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </article>
+        <article class="card fade-in-up" tabindex="0" role="button">
+          <div class="photo photo--card">
+            <img src="images/brownie.jpg" alt="Шоколадний брауні на тарілці">
+          </div>
+          <h3 class="card__title">Брауні</h3>
+          <p class="card__text">Насичений шоколадний смак для справжніх солодкоїжок.</p>
+          <div class="card__footer">
+            <span class="card__price">55 ₴</span>
+            <button type="button" class="card__order-btn" data-add-to-cart="Брауні" data-price="55" aria-label="Додати Брауні у кошик">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== СЕЗОННА ПРОПОЗИЦІЯ ===================== -->
+  <section class="offer" id="offer">
+    <div class="container offer__inner">
+      <div class="offer__image fade-in-up">
+        <div class="photo photo--offer">
+          <img src="images/pumpkin-latte.jpg" alt="Гарбузовий лате з корицею на фоні осіннього декору">
+        </div>
+      </div>
+      <div class="offer__text fade-in-up">
+        <span class="section-heading__eyebrow">Сезонна пропозиція</span>
+        <h2 class="offer__title">Гарбузовий лате вже тут</h2>
+        <p class="offer__description">Тепла кориця, ніжний гарбуз і бархатиста молочна піна. Смак осені у кожному ковтку — лише до кінця сезону.</p>
+        <button type="button" class="btn btn--primary" data-add-and-open="Гарбузовий лате" data-price="95">Спробувати зараз</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ПРО НАС ТА ПЕРЕВАГИ ===================== -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="section-heading fade-in-up">
+        <span class="section-heading__eyebrow">Про нас</span>
+        <h2 class="section-heading__title">Кава — це наша щоденна турбота</h2>
+        <p class="section-heading__text">Coffee Hub почався з маленької обсмажувальні та любові до якісного зерна. Сьогодні ми ділимося цим смаком з кожним, хто заходить на каву.</p>
+      </div>
+
+      <div class="benefits">
+        <div class="benefit fade-in-up">
+          <div class="benefit__icon">
+            <!-- Кавове зерно: власне обсмаження -->
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 6C13 6 6 15 6 25c0 9 7 17 15 17 9 0 21-9 21-22C42 11 34 6 24 6Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M15 34c3-7 3-15 9-20 4-3.5 9-4 12-2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="benefit__title">Власне обсмаження</h3>
+          <p class="benefit__text">Обсмажуємо зерно самі невеликими партіями — для максимальної свіжості.</p>
+        </div>
+        <div class="benefit fade-in-up">
+          <div class="benefit__icon">
+            <!-- Глобус: походження зерна -->
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="2.5"/>
+              <ellipse cx="24" cy="24" rx="8" ry="18" stroke="currentColor" stroke-width="2.5"/>
+              <line x1="6" y1="24" x2="42" y2="24" stroke="currentColor" stroke-width="2.5"/>
+              <path d="M9 15c4 2.5 9 4 15 4s11-1.5 15-4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M9 33c4-2.5 9-4 15-4s11 1.5 15 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="benefit__title">Зерна з Ефіопії та Колумбії</h3>
+          <p class="benefit__text">Обираємо найкращі врожаї від перевірених фермерських господарств.</p>
+        </div>
+        <div class="benefit fade-in-up">
+          <div class="benefit__icon">
+            <!-- Крісло: затишні простори -->
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 22v-4a4 4 0 0 1 4-4h16a4 4 0 0 1 4 4v4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8 22a3 3 0 0 1 3-3h1a3 3 0 0 1 3 3v6H8v-6Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M33 22a3 3 0 0 1 3-3h1a3 3 0 0 1 3 3v6h-7v-6Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M8 28h32v6a3 3 0 0 1-3 3H11a3 3 0 0 1-3-3v-6Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M12 37v3M36 37v3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="benefit__title">Затишні простори</h3>
+          <p class="benefit__text">Створюємо місце, куди хочеться повертатися знову і знову.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== КОНТАКТИ ТА ФУТЕР ===================== -->
+  <footer class="footer" id="contacts">
+    <div class="container footer__inner">
+      <div class="footer__brand fade-in-up">
+        <span class="navbar__logo">Coffee Hub</span>
+        <p class="footer__tagline">Твоя кава. Твій ранок.</p>
+      </div>
+
+      <div class="footer__info fade-in-up">
+        <h4 class="footer__heading">Адреса</h4>
+        <p>м. Київ, вул. Хрещатик, 22</p>
+      </div>
+
+      <div class="footer__info fade-in-up">
+        <h4 class="footer__heading">Години роботи</h4>
+        <p>Пн–Пт: 07:00–21:00</p>
+        <p>Сб–Нд: 08:00–22:00</p>
+      </div>
+
+      <div class="footer__info fade-in-up">
+        <h4 class="footer__heading">Зв'язок</h4>
+        <p>+38 (099) 123-45-67</p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Instagram">Instagram</a>
+          <a href="#" class="footer__social" aria-label="Facebook">Facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; 2026 Coffee Hub. Усі права захищено.</p>
+    </div>
+  </footer>
+
+  <!-- ===================== МОДАЛЬНЕ ВІКНО ЗАМОВЛЕННЯ ===================== -->
+  <div class="modal-overlay modal-overlay--dialog" id="orderOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
+      <button type="button" class="modal__close" id="modalCloseBtn" aria-label="Закрити вікно">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+
+      <h3 id="orderModalTitle" class="modal__title">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 8h13l-1 8.5A2 2 0 0 1 14 18H8a2 2 0 0 1-2-1.5L4 8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M8 5.5c0-1 .8-1.5 1.5-1s.5 1.5-.2 2M12 5.5c0-1 .8-1.5 1.5-1s.5 1.5-.2 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        Твоє замовлення
+      </h3>
+
+      <!-- Список товарів, доданих у кошик (заповнюється через JS) -->
+      <div class="cart-list" id="cartList" aria-live="polite"></div>
+
+      <!-- Показуємо, коли в кошику ще нічого немає: не глухий кут, а запрошення повернутись до меню -->
+      <div class="cart-empty" id="cartEmpty">
+        <svg class="cart-empty__icon" viewBox="0 0 24 24" fill="none"><path d="M4 8h13l-1 8.5A2 2 0 0 1 14 18H8a2 2 0 0 1-2-1.5L4 8Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <p class="cart-empty__text">Кошик поки порожній. Обери щось смачне з меню — і воно з'явиться тут.</p>
+        <button type="button" class="cart-empty__link" id="cartEmptyLink">Переглянути меню</button>
+      </div>
+
+      <!-- Підсумкова сума замовлення -->
+      <div class="cart-total" id="cartTotal" hidden>
+        <span>Разом</span>
+        <span id="cartTotalSum">0 ₴</span>
+      </div>
+
+      <!-- Форма замовлення -->
+      <form id="orderForm" class="order-form">
+        <label class="order-form__field">
+          <span>Ім'я</span>
+          <input type="text" id="orderName" name="name" required placeholder="Твоє ім'я">
+        </label>
+        <label class="order-form__field">
+          <span>Телефон</span>
+          <input type="tel" id="orderPhone" name="phone" required placeholder="+38 (0__) ___-__-__">
+        </label>
+        <label class="order-form__field">
+          <span>Коментар (необов'язково)</span>
+          <textarea id="orderComment" name="comment" rows="2" placeholder="Наприклад: без цукру"></textarea>
+        </label>
+        <button type="submit" class="btn btn--primary order-form__submit" id="orderSubmitBtn" disabled>Підтвердити замовлення</button>
+      </form>
+
+      <!-- Екран підтвердження після відправки форми -->
+      <div class="modal__success" id="modalSuccess" hidden>
+        <div class="modal__success-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 12.5l2.5 2.5L16 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Дякуємо!</h3>
+        <p id="modalSuccessText">Твоє замовлення прийнято. Ми зв'яжемося з тобою найближчим часом.</p>
+        <button type="button" class="btn btn--secondary" id="modalSuccessClose">Закрити</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== ПОВНОЕКРАННА СТОРІНКА ТОВАРУ ===================== -->
+  <!-- Навігація сайту лишається видимою зверху (z-index нижчий за .navbar) —
+       так сторінка не виглядає порожньою і людина не губить контекст сайту -->
+  <div class="modal-overlay modal-overlay--fullscreen" id="productOverlay" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+    <div class="product-page">
+      <button type="button" class="product-back" id="productCloseBtn">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Назад до меню
+      </button>
+
+      <div class="product-page__top">
+        <!-- Велике фото товару (заповнюється через JS даними з картки, на яку клікнули) -->
+        <div class="photo product-photo">
+          <img id="productImage" src="" alt="">
+        </div>
+
+        <div class="product-page__info">
+          <span class="product-badge" id="productBadge"></span>
+          <h1 id="productModalTitle" class="product-title"></h1>
+          <p class="product-meta" id="productMeta"></p>
+          <p class="product-description" id="productDescription"></p>
+          <p class="product-price" id="productPrice"></p>
+          <button type="button" class="btn btn--primary product-add-btn" id="productAddBtn">Додати в кошик</button>
+        </div>
+      </div>
+
+      <!-- Розгортувані секції з поживною цінністю, як на сайтах кавових мереж -->
+      <div class="product-nutrition-section">
+        <h2 class="product-nutrition-heading">Поживна цінність</h2>
+        <div class="product-accordion">
+          <button type="button" class="product-accordion__header">
+            Енергетична цінність та вміст поживних речовин
+            <svg class="product-accordion__chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="product-accordion__panel" id="productNutrition">
+            <div class="product-accordion__inner"></div>
+          </div>
+
+          <button type="button" class="product-accordion__header">
+            Склад та алергени
+            <svg class="product-accordion__chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="product-accordion__panel" id="productComposition">
+            <div class="product-accordion__inner"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
