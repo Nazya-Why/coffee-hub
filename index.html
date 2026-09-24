@@ -19,6 +19,9 @@
 </head>
 <body>
 
+  <!-- Прихований для очей регіон: озвучує скрінрідеру додавання товару в кошик -->
+  <div id="cartStatus" class="visually-hidden" role="status" aria-live="polite"></div>
+
   <!-- ===================== НАВІГАЦІЯ ===================== -->
   <header class="navbar" id="navbar">
     <div class="container navbar__inner">
@@ -35,7 +38,7 @@
 
       <div class="navbar__actions">
         <button type="button" class="btn btn--primary btn--small cart-trigger">
-          Замовити
+          Кошик
           <span class="cart-badge" data-cart-badge hidden>0</span>
         </button>
 
@@ -57,7 +60,7 @@
         <a href="#gallery" class="navbar__mobile-link">Галерея</a>
         <a href="#contacts" class="navbar__mobile-link">Контакти</a>
         <button type="button" class="btn btn--primary cart-trigger">
-          Замовити
+          Кошик
           <span class="cart-badge" data-cart-badge hidden>0</span>
         </button>
       </div>
@@ -72,7 +75,7 @@
         <p class="hero__subtitle">Свіжообсмажені зерна, тепла атмосфера і смак, який хочеться повторити щодня.</p>
         <div class="hero__buttons">
           <a href="#menu" class="btn btn--primary">Дивитися меню</a>
-          <a href="#contacts" class="btn btn--secondary">Знайти кав'ярню</a>
+          <a href="#contacts" class="btn btn--secondary">Наша адреса</a>
         </div>
       </div>
 
@@ -95,15 +98,16 @@
 
       <!-- Вкладки категорій меню -->
       <div class="menu__tabs fade-in-up" role="tablist">
-        <button class="menu__tab is-active" data-tab="coffee" role="tab">Кава</button>
-        <button class="menu__tab" data-tab="tea" role="tab">Чай</button>
-        <button class="menu__tab" data-tab="cold" role="tab">Холодні напої</button>
-        <button class="menu__tab" data-tab="bakery" role="tab">Випічка</button>
+        <button class="menu__tab is-active" data-tab="coffee" role="tab" id="tab-coffee" aria-selected="true" aria-controls="panel-coffee">Кава</button>
+        <button class="menu__tab" data-tab="tea" role="tab" id="tab-tea" aria-selected="false" aria-controls="panel-tea">Чай</button>
+        <button class="menu__tab" data-tab="cold" role="tab" id="tab-cold" aria-selected="false" aria-controls="panel-cold">Холодні напої</button>
+        <button class="menu__tab" data-tab="bakery" role="tab" id="tab-bakery" aria-selected="false" aria-controls="panel-bakery">Випічка</button>
       </div>
 
       <!-- Категорія: Кава -->
-      <div class="menu__grid is-active" data-panel="coffee">
-        <article class="card fade-in-up" tabindex="0" role="button">
+      <div class="menu__grid is-active" data-panel="coffee" role="tabpanel" id="panel-coffee" aria-labelledby="tab-coffee">
+        <article class="card fade-in-up">
+          <button type="button" class="card__link" aria-label="Детальніше про Еспресо, 55 ₴"></button>
           <div class="photo photo--card">
             <img src="images/espresso.jpg" alt="Еспресо у маленькій білій чашці на блюдці">
           </div>
@@ -111,12 +115,13 @@
           <p class="card__text">Насичений і бадьорий постріл кави для швидкого початку дня.</p>
           <div class="card__footer">
             <span class="card__price">55 ₴</span>
-            <button type="button" class="card__order-btn" data-add-to-cart="Еспресо" data-price="55" aria-label="Додати Еспресо у кошик">
+            <button type="button" class="card__order-btn" data-add-to-cart="Еспресо" data-price="55" aria-label="Додати Еспресо у кошик, 55 ₴">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
             </button>
           </div>
         </article>
-        <article class="card fade-in-up" tabindex="0" role="button">
+        <article class="card fade-in-up">
+          <button type="button" class="card__link" aria-label="Детальніше про Капучино, 75 ₴"></button>
           <div class="photo photo--card">
             <img src="images/cappuccino.jpg" alt="Капучино з ніжною молочною пінкою у білому кухлі">
           </div>
@@ -124,12 +129,13 @@
           <p class="card__text">Оксамитова піна і м'який баланс кави та молока.</p>
           <div class="card__footer">
             <span class="card__price">75 ₴</span>
-            <button type="button" class="card__order-btn" data-add-to-cart="Капучино" data-price="75" aria-label="Додати Капучино у кошик">
+            <button type="button" class="card__order-btn" data-add-to-cart="Капучино" data-price="75" aria-label="Додати Капучино у кошик, 75 ₴">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
             </button>
           </div>
         </article>
-        <article class="card fade-in-up" tabindex="0" role="button">
+        <article class="card fade-in-up">
+          <button type="button" class="card__link" aria-label="Детальніше про Латте, 80 ₴"></button>
           <div class="photo photo--card">
             <img src="images/latte.jpg" alt="Латте у високій скляній чашці з візерунком на піні">
           </div>
@@ -137,12 +143,13 @@
           <p class="card__text">М'який, кремовий, з легкою кавовою ноткою на другому плані.</p>
           <div class="card__footer">
             <span class="card__price">80 ₴</span>
-            <button type="button" class="card__order-btn" data-add-to-cart="Латте" data-price="80" aria-label="Додати Латте у кошик">
+            <button type="button" class="card__order-btn" data-add-to-cart="Латте" data-price="80" aria-label="Додати Латте у кошик, 80 ₴">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
             </button>
           </div>
         </article>
-        <article class="card fade-in-up" tabindex="0" role="button">
+        <article class="card fade-in-up">
+          <button type="button" class="card__link" aria-label="Детальніше про Американо, 60 ₴"></button>
           <div class="photo photo--card">
             <img src="images/americano.jpg" alt="Американо у прозорій скляній чашці на світлому фоні">
           </div>
@@ -150,7 +157,7 @@
           <p class="card__text">Чиста кава без зайвого — для тих, хто цінує простоту.</p>
           <div class="card__footer">
             <span class="card__price">60 ₴</span>
-            <button type="button" class="card__order-btn" data-add-to-cart="Американо" data-price="60" aria-label="Додати Американо у кошик">
+            <button type="button" class="card__order-btn" data-add-to-cart="Американо" data-price="60" aria-label="Додати Американо у кошик, 60 ₴">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
             </button>
           </div>
@@ -158,8 +165,9 @@
       </div>
 
       <!-- Категорія: Чай -->
-      <div class="menu__grid" data-panel="tea">
-        <article class="card fade-in-up" tabindex="0" role="button">
+      <div class="menu__grid" data-panel="tea" role="tabpanel" id="panel-tea" aria-labelledby="tab-tea">
+        <article class="card fade-in-up">
+          <button type="button" class="card__link" aria-label="Детальніше про Чорний чай, 50 ₴"></button>
           <div class="photo photo--card">
             <img src="images/black-tea.jpg" alt="Чорний чай у скляному чайнику з листям м'яти поруч">
           </div>
@@ -167,12 +175,13 @@
           <p class="card__text">Класика з насиченим ароматом і легкою терпкістю.</p>
           <div class="card__footer">
             <span class="card__price">50 ₴</span>
-            <button type="button" class="card__order-btn" data-add-to-cart="Чорний чай" data-price="50" aria-label="Додати Чорний чай у кошик">
+            <button type="button" class="card__order-btn" data-add-to-cart="Чорний чай" data-price="50" aria-label="Додати Чорний чай у кошик, 50 ₴">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
             </button>
           </div>
         </article>
-        <article class="card fade-in-up" tabindex="0" role="button">
+        <article class="card fade-in-up">
+          <button type="button" class="card__link" aria-label="Детальніше про Зелений чай, 50 ₴"></button>
           <div class="photo photo--card">
             <img src="images/green-tea.jpg" alt="Зелений чай з листочками м'яти у прозорому кухлі">
           </div>
@@ -180,12 +189,13 @@
           <p class="card__text">Легкий і освіжаючий, з тонким трав'яним смаком.</p>
           <div class="card__footer">
             <span class="card__price">50 ₴</span>
-            <button type="button" class="card__order-btn" data-add-to-cart="Зелений чай" data-price="50" aria-label="Додати Зелений чай у кошик">
+            <button type="button" class="card__order-btn" data-add-to-cart="Зелений чай" data-price="50" aria-label="Додати Зелений чай у кошик, 50 ₴">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
             </button>
           </div>
         </article>
-        <article class="card fade-in-up" tabindex="0" role="button">
+        <article class="card fade-in-up">
+          <button type="button" class="card__link" aria-label="Детальніше про Ягідний чай, 55 ₴"></button>
           <div class="photo photo--card">
             <img src="images/berry-tea.jpg" alt="Ягідний чай зі свіжими ягодами">
           </div>
@@ -193,7 +203,7 @@
           <p class="card__text">Соковита суміш ягід і фруктів — тепло у чашці.</p>
           <div class="card__footer">
             <span class="card__price">55 ₴</span>
-            <button type="button" class="card__order-btn" data-add-to-cart="Ягідний чай" data-price="55" aria-label="Додати Ягідний чай у кошик">
+            <button type="button" class="card__order-btn" data-add-to-cart="Ягідний чай" data-price="55" aria-label="Додати Ягідний чай у кошик, 55 ₴">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
             </button>
           </div>
@@ -201,8 +211,9 @@
       </div>
 
       <!-- Категорія: Холодні напої -->
-      <div class="menu__grid" data-panel="cold">
-        <article class="card fade-in-up" tabindex="0" role="button">
+      <div class="menu__grid" data-panel="cold" role="tabpanel" id="panel-cold" aria-labelledby="tab-cold">
+        <article class="card fade-in-up">
+          <button type="button" class="card__link" aria-label="Детальніше про Айс-латте, 85 ₴"></button>
           <div class="photo photo--card">
             <img src="images/iced-latte.jpg" alt="Айс-латте з льодом у високому скляному стакані">
           </div>
@@ -210,12 +221,13 @@
           <p class="card__text">Прохолодна кавова насолода в спекотний день.</p>
           <div class="card__footer">
             <span class="card__price">85 ₴</span>
-            <button type="button" class="card__order-btn" data-add-to-cart="Айс-латте" data-price="85" aria-label="Додати Айс-латте у кошик">
+            <button type="button" class="card__order-btn" data-add-to-cart="Айс-латте" data-price="85" aria-label="Додати Айс-латте у кошик, 85 ₴">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
             </button>
           </div>
         </article>
-        <article class="card fade-in-up" tabindex="0" role="button">
+        <article class="card fade-in-up">
+          <button type="button" class="card__link" aria-label="Детальніше про Фраппе, 90 ₴"></button>
           <div class="photo photo--card">
             <img src="images/frappe.jpg" alt="Холодний фраппе зі збитою піною у прозорому стакані">
           </div>
@@ -223,12 +235,13 @@
           <p class="card__text">Збита кавова піна поверх крижаної основи.</p>
           <div class="card__footer">
             <span class="card__price">90 ₴</span>
-            <button type="button" class="card__order-btn" data-add-to-cart="Фраппе" data-price="90" aria-label="Додати Фраппе у кошик">
+            <button type="button" class="card__order-btn" data-add-to-cart="Фраппе" data-price="90" aria-label="Додати Фраппе у кошик, 90 ₴">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
             </button>
           </div>
         </article>
-        <article class="card fade-in-up" tabindex="0" role="button">
+        <article class="card fade-in-up">
+          <button type="button" class="card__link" aria-label="Детальніше про Холодний чай, 60 ₴"></button>
           <div class="photo photo--card">
             <img src="images/iced-tea.jpg" alt="Холодний чай з лимоном і кубиками льоду">
           </div>
@@ -236,7 +249,7 @@
           <p class="card__text">Освіжаючий напій з ноткою цитрусу.</p>
           <div class="card__footer">
             <span class="card__price">60 ₴</span>
-            <button type="button" class="card__order-btn" data-add-to-cart="Холодний чай" data-price="60" aria-label="Додати Холодний чай у кошик">
+            <button type="button" class="card__order-btn" data-add-to-cart="Холодний чай" data-price="60" aria-label="Додати Холодний чай у кошик, 60 ₴">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
             </button>
           </div>
@@ -244,8 +257,9 @@
       </div>
 
       <!-- Категорія: Випічка -->
-      <div class="menu__grid" data-panel="bakery">
-        <article class="card fade-in-up" tabindex="0" role="button">
+      <div class="menu__grid" data-panel="bakery" role="tabpanel" id="panel-bakery" aria-labelledby="tab-bakery">
+        <article class="card fade-in-up">
+          <button type="button" class="card__link" aria-label="Детальніше про Круасан, 45 ₴"></button>
           <div class="photo photo--card">
             <img src="images/croissant.jpg" alt="Свіжий круасан на дерев'яній дошці">
           </div>
@@ -253,12 +267,13 @@
           <p class="card__text">Хрусткий зовні, ніжний всередині. Ідеальна пара до кави.</p>
           <div class="card__footer">
             <span class="card__price">45 ₴</span>
-            <button type="button" class="card__order-btn" data-add-to-cart="Круасан" data-price="45" aria-label="Додати Круасан у кошик">
+            <button type="button" class="card__order-btn" data-add-to-cart="Круасан" data-price="45" aria-label="Додати Круасан у кошик, 45 ₴">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
             </button>
           </div>
         </article>
-        <article class="card fade-in-up" tabindex="0" role="button">
+        <article class="card fade-in-up">
+          <button type="button" class="card__link" aria-label="Детальніше про Чізкейк, 70 ₴"></button>
           <div class="photo photo--card">
             <img src="images/cheesecake.jpg" alt="Шматок чізкейку з ягодами на білій тарілці">
           </div>
@@ -266,12 +281,13 @@
           <p class="card__text">Ніжний вершковий смак з легкою кислинкою ягід.</p>
           <div class="card__footer">
             <span class="card__price">70 ₴</span>
-            <button type="button" class="card__order-btn" data-add-to-cart="Чізкейк" data-price="70" aria-label="Додати Чізкейк у кошик">
+            <button type="button" class="card__order-btn" data-add-to-cart="Чізкейк" data-price="70" aria-label="Додати Чізкейк у кошик, 70 ₴">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
             </button>
           </div>
         </article>
-        <article class="card fade-in-up" tabindex="0" role="button">
+        <article class="card fade-in-up">
+          <button type="button" class="card__link" aria-label="Детальніше про Брауні, 55 ₴"></button>
           <div class="photo photo--card">
             <img src="images/brownie.jpg" alt="Шоколадний брауні на тарілці">
           </div>
@@ -279,7 +295,7 @@
           <p class="card__text">Насичений шоколадний смак для справжніх солодкоїжок.</p>
           <div class="card__footer">
             <span class="card__price">55 ₴</span>
-            <button type="button" class="card__order-btn" data-add-to-cart="Брауні" data-price="55" aria-label="Додати Брауні у кошик">
+            <button type="button" class="card__order-btn" data-add-to-cart="Брауні" data-price="55" aria-label="Додати Брауні у кошик, 55 ₴">
               <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
             </button>
           </div>
@@ -401,7 +417,7 @@
 
       <div class="reviews__grid">
         <article class="review fade-in-up">
-          <div class="review__stars" aria-label="5 із 5 зірок">
+          <div class="review__stars" role="img" aria-label="5 із 5 зірок">
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg>
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg>
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg>
@@ -416,7 +432,7 @@
         </article>
 
         <article class="review fade-in-up">
-          <div class="review__stars" aria-label="5 із 5 зірок">
+          <div class="review__stars" role="img" aria-label="5 із 5 зірок">
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg>
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg>
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg>
@@ -431,7 +447,7 @@
         </article>
 
         <article class="review fade-in-up">
-          <div class="review__stars" aria-label="5 із 5 зірок">
+          <div class="review__stars" role="img" aria-label="5 із 5 зірок">
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg>
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg>
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg>
@@ -514,11 +530,11 @@
       <form id="orderForm" class="order-form">
         <label class="order-form__field">
           <span>Ім'я</span>
-          <input type="text" id="orderName" name="name" required placeholder="Твоє ім'я">
+          <input type="text" id="orderName" name="name" required placeholder="Твоє ім'я" autocomplete="name">
         </label>
         <label class="order-form__field">
           <span>Телефон</span>
-          <input type="tel" id="orderPhone" name="phone" required placeholder="+38 (0__) ___-__-__">
+          <input type="tel" id="orderPhone" name="phone" required placeholder="+38 (0__) ___-__-__" autocomplete="tel">
         </label>
         <label class="order-form__field">
           <span>Коментар (необов'язково)</span>

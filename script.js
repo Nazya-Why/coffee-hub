@@ -61,11 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const targetPanel = tab.dataset.tab;
 
       // Знімаємо активний стан з усіх вкладок і панелей
-      tabs.forEach((t) => t.classList.remove('is-active'));
+      tabs.forEach((t) => {
+        t.classList.remove('is-active');
+        t.setAttribute('aria-selected', 'false'); // без цього скрінрідер не знає, яка вкладка активна
+      });
       panels.forEach((p) => p.classList.remove('is-active'));
 
       // Активуємо обрану вкладку та відповідну панель
       tab.classList.add('is-active');
+      tab.setAttribute('aria-selected', 'true');
       const activePanel = document.querySelector(`.menu__grid[data-panel="${targetPanel}"]`);
       activePanel.classList.add('is-active');
 
@@ -124,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const orderSubmitBtn = document.getElementById('orderSubmitBtn');
   const cartEmptyLink = document.getElementById('cartEmptyLink');
   const cartBadges = document.querySelectorAll('[data-cart-badge]');
+  const cartStatus = document.getElementById('cartStatus');
 
   // Додає товар у кошик. Якщо він там уже є — просто збільшує кількість
   function addToCart(name, price) {
@@ -134,6 +139,10 @@ document.addEventListener('DOMContentLoaded', () => {
       cart.push({ name, price, qty: 1 });
     }
     updateCartBadge();
+
+    // Візуально це видно по бейджу й анімації кнопки, але для скрінрідера
+    // без цього рядка додавання в кошик поза відкритим вікном лишається непоміченим
+    cartStatus.textContent = `${name} додано в кошик`;
   }
 
   // Змінює кількість товару на delta (+1 / -1). Прибирає товар, якщо кількість опустилась до 0
@@ -332,6 +341,17 @@ document.addEventListener('DOMContentLoaded', () => {
     trapFocus(event);
   });
 
+  // Українські повідомлення валідації замість дефолтних браузерних, які
+  // залежать від мовної локалі ОС/браузера, а не від lang сторінки
+  orderForm.querySelectorAll('[required]').forEach((field) => {
+    field.addEventListener('invalid', () => {
+      field.setCustomValidity(
+        field.type === 'tel' ? 'Вкажи, будь ласка, номер телефону.' : 'Заповни, будь ласка, це поле.'
+      );
+    });
+    field.addEventListener('input', () => field.setCustomValidity(''));
+  });
+
   // Відправка форми: перевіряємо, що кошик не порожній, і показуємо екран підтвердження
   orderForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -451,20 +471,12 @@ document.addEventListener('DOMContentLoaded', () => {
     closeModal(productOverlay);
   }
 
-  // Клік по картці меню відкриває детальний перегляд, окрім кліку по кнопці "+"
-  document.querySelectorAll('.card').forEach((card) => {
-    card.addEventListener('click', (event) => {
-      if (event.target.closest('.card__order-btn')) return;
-      openProductModal(card);
-    });
-
-    // Доступ з клавіатури: Enter або Пробіл теж відкривають картку товару
-    card.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openProductModal(card);
-      }
-    });
+  // Кнопка "Детальніше про ..." — розтягнута на всю картку, відкриває детальний перегляд.
+  // Це справжня <button>, тож Enter/Пробіл працюють самі, без ручної обробки keydown —
+  // раніше ця роль була у самої картки (article role="button"), яка ще й містила
+  // всередині кнопку "+", що є невалідним вкладенням інтерактивних елементів
+  document.querySelectorAll('.card__link').forEach((link) => {
+    link.addEventListener('click', () => openProductModal(link.closest('.card')));
   });
 
   productCloseBtn.addEventListener('click', closeProductModal);

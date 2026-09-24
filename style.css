@@ -32,6 +32,33 @@
   --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
   --transition-fast: 0.3s var(--ease-smooth);
   --transition-normal: 0.5s var(--ease-out-soft);
+
+  /* Кольори "приглушеного" тексту на коричневому фоні футера — явні токени
+     замість rgba(white, X), бо opacity-версії давали контраст 3.84:1 і 4.62:1
+     (нижче або на межі WCAG AA 4.5:1). Цей колір дає ~5.3:1 на #6F4E37. */
+  --color-on-brown-muted: #E0D8D1;
+
+  /* Колір посилань у шапці в стані спокою — раніше виражався через
+     color:white + opacity:.85, що крихко (залежить від фону). Явний токен
+     з тим самим візуальним результатом (контраст на зеленому ~6.2:1) */
+  --color-nav-link-rest: #DDE7E3;
+
+  /* ------------------------------------------------------------------
+     Базова шкала відступів і типографіки (4/8px сітка).
+     Введена аудитом для консистентності; застосована точково там,
+     де вносились зміни в цьому проході — повна міграція всього файлу
+     свідомо винесена окремим завданням (див. примітку в кінці файлу) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
 }
 
 /* ==========================================================================
@@ -52,6 +79,20 @@ html {
    (наприклад, .order-form: display:flex переб'є стандартну поведінку hidden) */
 [hidden] {
   display: none !important;
+}
+
+/* Ховає елемент візуально, але лишає доступним для скрінрідерів —
+   для #cartStatus (аудіо-підтвердження додавання товару в кошик) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 body {
@@ -175,9 +216,11 @@ ul, li {
   transition-duration: 0.15s;
 }
 
-/* Неактивна кнопка (наприклад, підтвердження при порожньому кошику) */
+/* Неактивна кнопка. Візуальний стан для КОНКРЕТНО .order-form__submit заданий
+   окремо нижче (нейтральний фон замість тьмяно-зеленого) — якщо колись з'явиться
+   ще одна кнопка з атрибутом disabled, їй теж варто задати власний явний стиль,
+   а не покладатись на загальний opacity, який погано читається на кольорових фонах */
 .btn:disabled {
-  opacity: 0.45;
   cursor: not-allowed;
   pointer-events: none;
 }
@@ -243,13 +286,15 @@ ul, li {
 .navbar__link {
   font-weight: 500;
   font-size: 15px;
-  color: var(--color-white);
-  opacity: 0.85;
-  transition: opacity var(--transition-fast);
+  /* Явний колір-токен замість color:white + opacity:.85 — те саме значення
+     кольору (контраст на зеленій шапці ~6.2:1), але без залежності від того,
+     що саме лежить під елементом */
+  color: var(--color-nav-link-rest);
+  transition: color var(--transition-fast);
 }
 
 .navbar__link:hover {
-  opacity: 1;
+  color: var(--color-white);
 }
 
 .navbar__actions {
@@ -510,10 +555,10 @@ ul, li {
 }
 
 .card {
+  position: relative; /* система координат для .card__link, що розтягується на всю картку */
   background-color: var(--color-white);
   border-radius: var(--radius);
   padding: 20px;
-  cursor: pointer; /* вся картка клікабельна — відкриває детальний перегляд */
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
@@ -522,7 +567,27 @@ ul, li {
   box-shadow: var(--shadow-md);
 }
 
-.card:focus-visible {
+/* "Розтягнута кнопка": невидима, займає всю картку і відкриває деталі товару.
+   Це свідома заміна попередньої розмітки (article role="button" з вкладеною
+   справжньою <button> всередині) — вкладені інтерактивні елементи є невалідним
+   HTML і призводили до того, що скрінрідер оголошував весь вміст картки одним
+   суцільним реченням при фокусі. Тепер це дві незалежні, коректно розмічені
+   кнопки-сестри: .card__link (деталі) і .card__order-btn (швидке додавання),
+   а .card__footer підіймається над оверлеєм через z-index, щоб лишатись клікабельним */
+.card__link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: var(--radius);
+}
+
+.card__link:focus-visible {
   outline: 2px solid var(--color-green);
   outline-offset: 3px;
 }
@@ -539,8 +604,13 @@ ul, li {
   margin-bottom: 16px;
 }
 
-/* Нижній рядок картки: ціна + кнопка замовлення */
+/* Нижній рядок картки: ціна + кнопка замовлення.
+   position:relative + z-index вище за .card__link — інакше невидимий
+   оверлей-посилання перехоплював би кліки й тут (стандартний прийом
+   для карток з "розтягнутим" посиланням і окремою кнопкою дії) */
 .card__footer {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -809,7 +879,9 @@ ul, li {
 }
 
 .footer__tagline {
-  color: rgba(255, 255, 255, 0.7);
+  /* Було rgba(255,255,255,.7) → контраст 4.62:1, лише +0.12 над мінімумом AA.
+     Явний токен дає ~5.3:1 — стабільний запас */
+  color: var(--color-on-brown-muted);
   margin-top: 8px;
   font-size: 15px;
 }
@@ -823,7 +895,7 @@ ul, li {
 }
 
 .footer__info p {
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--color-on-brown-muted);
   font-size: 15px;
   margin-bottom: 4px;
 }
@@ -851,7 +923,10 @@ ul, li {
   padding: 24px;
   text-align: center;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
+  /* Було rgba(255,255,255,.6) → контраст 3.84:1, реальний провал WCAG AA
+     (потрібно 4.5:1 для тексту такого розміру). Той самий безпечний токен,
+     що й для іншого приглушеного тексту футера, дає ~5.3:1 */
+  color: var(--color-on-brown-muted);
 }
 
 /* ==========================================================================
@@ -997,14 +1072,14 @@ ul, li {
   display: flex;
   align-items: stretch;
   flex-shrink: 0;
-  height: 30px;
+  height: 36px;
   border-radius: 100px;
   background-color: var(--color-cream);
   overflow: hidden;
 }
 
 .cart-item__qty-btn {
-  width: 28px;
+  width: 32px;
   border: none;
   background: none;
   color: var(--color-text-dark);
@@ -1038,8 +1113,10 @@ ul, li {
 }
 
 .cart-item__remove {
-  width: 26px;
-  height: 26px;
+  /* Було 26×26px — над мінімумом WCAG (24px), але із запасом лише 2px і
+     впритул до сусіднього степера кількості. Збільшено для впевненішого тапу */
+  width: 32px;
+  height: 32px;
   border: none;
   background: none;
   color: var(--color-text-gray);
@@ -1160,6 +1237,14 @@ ul, li {
   outline: none;
   border-color: var(--color-green);
   background-color: var(--color-white);
+}
+
+/* Явний колір плейсхолдера замість дефолту браузера (Firefox, наприклад,
+   сам занижує йому opacity) — консистентний вигляд і контраст 5.07:1 на кремовому полі */
+.order-form__field input::placeholder,
+.order-form__field textarea::placeholder {
+  color: var(--color-text-gray);
+  opacity: 1;
 }
 
 .order-form__submit {
@@ -1432,8 +1517,12 @@ ul, li {
     grid-template-columns: repeat(3, 1fr);
   }
 
+  /* Було одразу 3 колонки з 768px: при різній довжині тексту відгуків
+     картки в одному ряду розтягувались CSS Grid до висоти найдовшої,
+     і в коротших лишалось помітне порожнє місце знизу. 2 колонки дають
+     кожній картці більше ширини, і 3-тя колонка вмикається пізніше (1024px) */
   .reviews__grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .footer__inner {
@@ -1447,6 +1536,10 @@ ul, li {
 
 @media (min-width: 1024px) {
   .menu__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .reviews__grid {
     grid-template-columns: repeat(3, 1fr);
   }
 
