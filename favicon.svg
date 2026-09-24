@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Кремовий заокруглений фон — та сама палітра, що й на сайті -->
+  <rect width="32" height="32" rx="8" fill="#F7F5F2"/>
+
+  <!-- Чашка кави суцільним зеленим кольором бренду -->
+  <path d="M8 12h13l-1.2 9.5A2.5 2.5 0 0 1 17.3 24H11.7a2.5 2.5 0 0 1-2.5-2.5L8 12Z" fill="#1E5C45"/>
+
+  <!-- Ручка чашки -->
+  <path d="M21 14h1.8a2.7 2.7 0 0 1 0 5.4H21" stroke="#1E5C45" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Пара над чашкою -->
+  <path d="M12 9c0-1.2 1-1.8 1.8-1.2s.6 1.8-.2 2.4M17 9c0-1.2 1-1.8 1.8-1.2s.6 1.8-.2 2.4"
+    stroke="#1E5C45" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+</svg>
